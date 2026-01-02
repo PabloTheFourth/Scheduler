@@ -29,8 +29,8 @@ void viewAvailability( string schedule[], int arraySize);
 int main() {
 bool menuLoop = true;
 const int numOfEmployees = 50;
-int menuChoice = 0, employeeLoopTime, dummyEmployeeLoopTime = 0;
-string schedule[numOfEmployees];
+int employeeLoopTime, dummyEmployeeLoopTime = 0;
+string schedule[numOfEmployees], menuChoice;
 
 while (menuLoop == true) {
     cout << "\nWelcome to Pablos ultamate Scheduler! \n";
@@ -42,7 +42,7 @@ while (menuLoop == true) {
     cout << "Choice: ";
     cin >> menuChoice;
 
-    if (menuChoice == 1) {
+    if (menuChoice == "1") {
         cout << "How many Employess are we adding? ";
         cin >> employeeLoopTime;
         dummyEmployeeLoopTime += employeeLoopTime;
@@ -53,18 +53,20 @@ while (menuLoop == true) {
         */
     
         gatherAvailability(schedule, numOfEmployees, dummyEmployeeLoopTime);
+
+        cout <<
     }
 
-    if (menuChoice == 2) {
+    if (menuChoice == "2") {
         editAvailability(schedule, numOfEmployees);
     }
 
     
-    if (menuChoice == 3) {
+    if (menuChoice == "2") {
         viewAvailability(schedule, numOfEmployees);
     }
 
-    if (menuChoice == 4) {
+    if (menuChoice == "2") {
         menuLoop = false;
         cout << "have a good day!";    
     }
