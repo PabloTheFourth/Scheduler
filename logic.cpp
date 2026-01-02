@@ -23,7 +23,7 @@
 using namespace std;
 
 void gatherAvailability(string schedule[],int arraySize, int employeeLoopTime);
-void gatherSkillSet(string schedule[], int arraySize);
+void gatherSkillSet(string schedule[], int arraySize, int employeeLoopTime, int employeesAdded);
 void editAvailability(string schedule[], int arraySize);
 void viewAvailability( string schedule[], int arraySize);
 
@@ -59,7 +59,7 @@ while (menuLoop == true) {
         cin >> menuChoice;
         if (menuChoice == "Y")
         {
-
+            gatherSkillSet(schedule, numOfEmployees, dummyEmployeeLoopTime, employeeLoopTime);
         }
     }
 
@@ -79,6 +79,17 @@ while (menuLoop == true) {
 }
 
 return 0;
+}
+
+void gatherSkillSet(string schedule[], int arraySize, int employeeLoopTime, int employeesAdded)
+{
+string name;
+
+    for (int i = employeeLoopTime - employeesAdded; i < employeeLoopTime; i++)
+    {
+        name = schedule[i];
+        cout << endl << endl << name;
+    }    
 }
 
 void viewAvailability( string schedule[], int arraySize)
