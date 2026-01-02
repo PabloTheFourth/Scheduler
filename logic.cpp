@@ -7,7 +7,7 @@
 2. I need to add categories to the kitchen to see how good each person is in those categories 
     for example - Grill side, Salad Side, Pizza line, Pizza strecter, and prep.
 
-3. Add a sysstem that can detect what shift each person can work and turn those into "Hour Sectors".
+3. Add a system that can detect what shift each person can work and turn those into "Hour Sectors".
     for example - Morning could be 8am-3pm and for a Manager it could be 7am-4pm
     ----------------------------------------------------------------------------------------
     After these sections have been done, only than can i start on the system that can 
