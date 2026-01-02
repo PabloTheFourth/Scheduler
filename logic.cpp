@@ -23,6 +23,7 @@
 using namespace std;
 
 void gatherAvailability(string schedule[],int arraySize, int employeeLoopTime);
+void gatherSkillSet(string schedule[], int arraySize);
 void editAvailability(string schedule[], int arraySize);
 void viewAvailability( string schedule[], int arraySize);
 
@@ -54,7 +55,12 @@ while (menuLoop == true) {
     
         gatherAvailability(schedule, numOfEmployees, dummyEmployeeLoopTime);
 
-        cout <<
+        cout << endl << "Would you like to add a skill set for the kitchn? Y or N: ";
+        cin >> menuChoice;
+        if (menuChoice == "Y")
+        {
+
+        }
     }
 
     if (menuChoice == "2") {
@@ -62,11 +68,11 @@ while (menuLoop == true) {
     }
 
     
-    if (menuChoice == "2") {
+    if (menuChoice == "3") {
         viewAvailability(schedule, numOfEmployees);
     }
 
-    if (menuChoice == "2") {
+    if (menuChoice == "4") {
         menuLoop = false;
         cout << "have a good day!";    
     }
