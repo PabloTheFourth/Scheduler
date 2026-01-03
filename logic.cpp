@@ -55,7 +55,7 @@ while (menuLoop == true) {
     
         gatherAvailability(schedule, numOfEmployees, dummyEmployeeLoopTime);
 
-        cout << endl << "Would you like to add a skill set for the kitchn? Y or N: ";
+        cout << endl << "Would you like to add a skill set to the following added employee/s for the kitchn? Y or N: ";
         cin >> menuChoice;
         if (menuChoice == "Y")
         {
@@ -73,7 +73,17 @@ while (menuLoop == true) {
     }
 
     if (menuChoice == "4") {
+        string name, fileType = ".txt";
+
         menuLoop = false;
+        cout << "Closing all files";
+
+        for (int i = 0; i < dummyEmployeeLoopTime; i++)
+        {
+            name = schedule[i] + fileType;
+            remove(name.c_str());
+        }
+        cout << "All files closed";
         cout << "have a good day!";    
     }
 }
