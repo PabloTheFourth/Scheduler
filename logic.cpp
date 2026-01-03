@@ -5,13 +5,21 @@
 1. I need to add a feature that declares whether an employee is a manager or co worker - DONE
 
 2. I need to add categories to the kitchen to see how good each person is in those categories 
-    for example - Grill side, Salad Side, Pizza line, Pizza strecter, and prep.
+    for example - Grill side, Salad Side, Pizza line, Pizza strecter, and prep. - DONE 
 
 3. Add a system that can detect what shift each person can work and turn those into "Hour Sectors".
     for example - Morning could be 8am-3pm and for a Manager it could be 7am-4pm
     ----------------------------------------------------------------------------------------
     After these sections have been done, only than can i start on the system that can 
     schedule the employees based on those variables
+*/
+
+/*
+NOTES NOTES NOTES NOTES NOTES
+1/3/2026
+later remove the feature that deletes the files after closing the program. Find a way to reupload those files each time the 
+program is reused. 
+Fix the view for either Availability or Skill set 
 */
 
 
@@ -83,22 +91,91 @@ while (menuLoop == true) {
             name = schedule[i] + fileType;
             remove(name.c_str());
         }
-        cout << "All files closed";
-        cout << "have a good day!";    
+        cout << "\nAll files closed";
+        cout << "\nhave a good day!";    
     }
 }
 
 return 0;
 }
 
+/*
+Skill set list
+1. Salad side
+2. Grill side  
+3. Stretcher    
+4. Pizza line
+5. Oven
+6. Prep
+7. Dishwasher
+
+gatherSkillSet Function Notes
+ - While writing to the file, it does not start at the bottom but starts at the beginning and rewrites anything in its way.
+*/
+
 void gatherSkillSet(string schedule[], int arraySize, int employeeLoopTime, int employeesAdded)
 {
-string name;
+string name, fileType = ".txt";
+int skillNum;
 
     for (int i = employeeLoopTime - employeesAdded; i < employeeLoopTime; i++)
     {
-        name = schedule[i];
-        cout << endl << endl << name;
+    string dummyString;
+        name = schedule[i] + fileType;
+        ifstream MyFile (name);
+        ofstream TempFile ("temp.txt");
+        for (int i = 0; i <= 10; i++)
+        {
+            getline(MyFile, dummyString);
+            TempFile << dummyString << endl;
+        }
+        TempFile << endl;
+        MyFile.close();
+        remove(name.c_str());
+        TempFile.close();
+        ofstream Myfile ("temp2.txt");
+        Myfile << "Skill Set";
+        cout << "Please input a number between 0 - 10 for each skill that pops up\n";
+        cout << "Salad Side: ";
+        cin >> skillNum;
+        Myfile << "\nSalad Side: " << skillNum;
+        cout << "Grill Side: ";
+        cin >> skillNum;
+        Myfile << "\nGrill Side: " << skillNum;
+        cout << "Stretcher: ";
+        cin >> skillNum;
+        Myfile << "\nStretcher: " << skillNum;
+        cout << "Pizza Line: ";
+        cin >> skillNum;
+        Myfile << "\nPizza Line: " << skillNum;
+        cout << "Oven: ";
+        cin >> skillNum;
+        Myfile << "\nOven: " << skillNum;
+        cout << "Prep: ";
+        cin >> skillNum;
+        Myfile << "\nPrep: " << skillNum;
+        cout << "Dishwasher: ";
+        cin >> skillNum;
+        Myfile << "\nDishwasher: " << skillNum;
+        Myfile << endl << endl;
+        Myfile.close();
+        ifstream Myfile2 ("temp2.txt");
+        ifstream TempFile2 ("temp.txt");
+        ofstream Myfile3 (name);
+        while(getline(TempFile2, dummyString))
+        {
+            Myfile3 << dummyString << endl;
+        }
+        while(getline(Myfile2, dummyString))
+        {
+            Myfile3 << dummyString << endl;
+        }
+        TempFile2.close();
+        Myfile2.close();
+        Myfile3.close();
+
+        remove("temp2.txt");
+        remove("temp.txt");
     }    
 }
 
