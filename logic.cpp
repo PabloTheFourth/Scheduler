@@ -31,6 +31,7 @@ Fix the view for either Availability or Skill set
 using namespace std;
 
 void gatherAvailability(string schedule[],int arraySize, int employeeLoopTime);
+void editSkillSet(string schedule[], int arraySize);
 void gatherSkillSet(string schedule[], int arraySize, int employeeLoopTime, int employeesAdded);
 void editAvailability(string schedule[], int arraySize);
 void viewAvailability( string schedule[], int arraySize);
@@ -46,8 +47,10 @@ while (menuLoop == true) {
     cout << "please choose an option from the list below\n";
     cout << "1. add Employees Availability\n";
     cout << "2. edit an employees availability\n";
-    cout << "3. View an employees availability\n";
-    cout << "4. Turn Off\n";
+    cout << "3. edit an employees skills\n";
+    cout << "4. View an employees availability\n";
+    cout << "5. View an employees skills\n";
+    cout << "6. Turn Off\n";
     cout << "Choice: ";
     cin >> menuChoice;
 
@@ -56,10 +59,7 @@ while (menuLoop == true) {
         cin >> employeeLoopTime;
         dummyEmployeeLoopTime += employeeLoopTime;
         cin.ignore();
-        //string schedule[numOfEmployees]; //I need to fix this - its only updating the array within the function and not the whole program
-        /*
-        i fixed it bro
-        */
+        //string schedule[numOfEmployees]; //I need to fix this - its only updating the array within the function and not the whole program - FIXED
     
         gatherAvailability(schedule, numOfEmployees, dummyEmployeeLoopTime);
 
@@ -75,12 +75,16 @@ while (menuLoop == true) {
         editAvailability(schedule, numOfEmployees);
     }
 
-    
     if (menuChoice == "3") {
+        editSkillSet(schedule, numOfEmployees);
+
+    }
+    
+    if (menuChoice == "4") {
         viewAvailability(schedule, numOfEmployees);
     }
 
-    if (menuChoice == "4") {
+    if (menuChoice == "6") {
         string name, fileType = ".txt";
 
         menuLoop = false;
@@ -98,6 +102,87 @@ while (menuLoop == true) {
 
 return 0;
 }
+
+void editSkillSet(string schedule[], int arraySize)
+{
+string employee, menuSelect, dummyString;
+    //SHOW ALL EMPLOYEES
+    cout << "\nHere are all the Employees\n";
+    for (int i = 0; i < arraySize; i++)
+    {
+        if(schedule[i] == "")
+        {
+            break;
+        }
+        cout << schedule[i] << endl;
+    }
+    //INPUT THE SELECTED EMPLOYEE
+    cin.ignore();
+    cout << "\nWhich employees skill set would you like to edit? ";
+    getline(cin, employee);
+    ifstream MyFile (employee + ".txt");
+    ofstream MyTempFile ("temp.txt");
+    ofstream MySecondTempFile ("temp2.txt");
+    cout << "Heres their Skills\n";
+bool wordTest;
+    while (getline(MyFile, dummyString))
+    {
+        if(dummyString == "Skill Set")
+        {
+            wordTest = false;
+        }
+        if(wordTest == true)
+        {
+            MySecondTempFile << dummyString << endl;
+        }
+        MySecondTempFile << dummyString << endl;
+        if(dummyString == "Skill Set")
+        {
+            cout << dummyString << endl;
+            MyTempFile << dummyString << endl;
+            while(getline(MyFile, dummyString))
+            {
+                cout << dummyString << endl;
+                MyTempFile << dummyString << endl;
+            }
+        }
+    }
+    MySecondTempFile.close();
+    MyFile.close();
+    MyTempFile.close();
+    employee += ".txt";
+    remove(employee.c_str());
+    //INPUT WHICH SKILL TO EDIT
+    cout << "\nWhich skill would you like to edit? ";
+    cin >> menuSelect;
+    ofstream EmpSkills (employee);
+    ifstream TempFile ("temp.txt");
+    ifstream SecondTempFile ("temp2.txt");
+string skillSelected = menuSelect + ":";
+int skill;
+    while (getline(SecondTempFile, dummyString))
+    {
+        EmpSkills << dummyString << endl;
+    }
+    while (getline(TempFile, dummyString))
+    {
+        if(dummyString.find(skillSelected) == string::npos)
+        {
+            EmpSkills << dummyString << endl;
+        }
+        if(dummyString.find(skillSelected) != string::npos)
+        {
+            cout << "\nWhat would you like to change it to from 0 to 10? ";
+            cin >> skill;
+            EmpSkills << skillSelected << " " << skill << endl;
+        }
+
+    }
+    EmpSkills.close();
+    TempFile.close();
+    remove("temp.txt");
+    }
+
 
 /*
 Skill set list
@@ -135,7 +220,7 @@ int skillNum;
         TempFile.close();
         ofstream Myfile ("temp2.txt");
         Myfile << "Skill Set";
-        cout << "Please input a number between 0 - 10 for each skill that pops up\n";
+        cout << "Please input a number between 0 - 10 for each skill that pops up for " << schedule[i] << endl;
         cout << "Salad Side: ";
         cin >> skillNum;
         Myfile << "\nSalad Side: " << skillNum;
@@ -190,7 +275,7 @@ void viewAvailability( string schedule[], int arraySize)
             numOfEmployees += 1;
         }
     }
-    cout << "You currently have " << numOfEmployees << "." << endl << "Would you like to view all or only one? " << endl;
+    cout << "You currently have " << numOfEmployees << " employees" << "." << endl << "Would you like to view all or only one? " << endl;
     cout << "1. all" << endl << "2. One" << endl << "choice: ";
     cin >> choice;
     if (choice == 2)
