@@ -124,18 +124,18 @@ string employee, menuSelect, dummyString;
     ofstream MyTempFile ("temp.txt");
     ofstream MySecondTempFile ("temp2.txt");
     cout << "Heres their Skills\n";
-bool wordTest;
+bool wordTest = true;
     while (getline(MyFile, dummyString))
     {
         if(dummyString == "Skill Set")
         {
             wordTest = false;
+            cout << "it turned to false";
         }
         if(wordTest == true)
         {
             MySecondTempFile << dummyString << endl;
         }
-        MySecondTempFile << dummyString << endl;
         if(dummyString == "Skill Set")
         {
             cout << dummyString << endl;
@@ -181,6 +181,7 @@ int skill;
     EmpSkills.close();
     TempFile.close();
     remove("temp.txt");
+    remove("temp2.txt");
     }
 
 
@@ -201,7 +202,7 @@ gatherSkillSet Function Notes
 void gatherSkillSet(string schedule[], int arraySize, int employeeLoopTime, int employeesAdded)
 {
 string name, fileType = ".txt";
-int skillNum;
+double skillNum;
 
     for (int i = employeeLoopTime - employeesAdded; i < employeeLoopTime; i++)
     {
