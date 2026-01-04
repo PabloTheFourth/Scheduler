@@ -19,7 +19,10 @@ NOTES NOTES NOTES NOTES NOTES
 1/3/2026
 later remove the feature that deletes the files after closing the program. Find a way to reupload those files each time the 
 program is reused. 
-Fix the view for either Availability or Skill set 
+Fix the view for either Availability or Skill set - FIXED
+
+1/4/2026
+The schedule Array contains every bit of information about the employee, from their kitchen title to their skill set.
 */
 
 
@@ -126,7 +129,8 @@ string employee, menuSelect, dummyString;
     cin.ignore();
     cout << "\nWhich employees skill set would you like to view? ";
     getline(cin, employee);
-    ifstream MyFile (employee + ".txt");
+    ifstream MyFile (employee + ".txt");\
+    //SHOW THE SKILL SET
     cout << "Heres their Skill Set\n\n";
     while (getline(MyFile, dummyString))
     {
@@ -322,6 +326,10 @@ void viewAvailability( string schedule[], int arraySize)
     if (choice == 2)
     {
         cout << "\nPlease enter the name of the employee that you would like to view.\n";
+        for (int i = 0; i < numOfEmployees; i++)
+        {
+            cout << schedule[i] << endl;
+        }
         cout << "Name: ";
         cin.ignore();
         getline(cin, employeesName);
@@ -332,7 +340,12 @@ void viewAvailability( string schedule[], int arraySize)
     
     while (getline(MyFile, fileText))
     {
+        if (fileText == "Skill Set")
+        {
+            break;
+        }
         cout << fileText << endl;
+
     }
     
     MyFile.close();
@@ -354,6 +367,10 @@ void viewAvailability( string schedule[], int arraySize)
     
             while (getline(MyFile, fileText))
             {
+                if (fileText == "Skill Set")
+                {
+                    break;
+                }
                 cout << fileText << endl;
             }
             fileText = "";
