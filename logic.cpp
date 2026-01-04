@@ -34,7 +34,8 @@ void gatherAvailability(string schedule[],int arraySize, int employeeLoopTime);
 void editSkillSet(string schedule[], int arraySize);
 void gatherSkillSet(string schedule[], int arraySize, int employeeLoopTime, int employeesAdded);
 void editAvailability(string schedule[], int arraySize);
-void viewAvailability( string schedule[], int arraySize);
+void viewAvailability(string schedule[], int arraySize);
+void viewSkillSet(string schedule[], int arraySize);
 
 int main() {
 bool menuLoop = true;
@@ -79,6 +80,10 @@ while (menuLoop == true) {
         editSkillSet(schedule, numOfEmployees);
 
     }
+
+    if (menuChoice == "5") {
+        viewSkillSet(schedule, numOfEmployees);
+    }
     
     if (menuChoice == "4") {
         viewAvailability(schedule, numOfEmployees);
@@ -101,6 +106,40 @@ while (menuLoop == true) {
 }
 
 return 0;
+}
+
+void viewSkillSet(string schedule[], int arraySize)
+{
+string employee, menuSelect, dummyString;
+    //SHOW ALL EMPLOYEES
+    cout << "\nHere are all the Employees\n";
+    for (int i = 0; i < arraySize; i++)
+    {
+        if(schedule[i] == "")
+        {
+            break;
+        }
+        cout << schedule[i] << endl;
+    }
+
+    //INPUT THE SELECTED EMPLOYEE
+    cin.ignore();
+    cout << "\nWhich employees skill set would you like to view? ";
+    getline(cin, employee);
+    ifstream MyFile (employee + ".txt");
+    cout << "Heres their Skill Set\n\n";
+    while (getline(MyFile, dummyString))
+    {
+        if(dummyString == "Skill Set")
+        {
+            cout << dummyString << endl;
+            while (getline(MyFile, dummyString))
+            {
+                cout << dummyString << endl;
+            }
+        }
+    }
+    MyFile.close();
 }
 
 void editSkillSet(string schedule[], int arraySize)
@@ -154,7 +193,7 @@ bool wordTest = true;
     remove(employee.c_str());
     //INPUT WHICH SKILL TO EDIT
     cout << "\nWhich skill would you like to edit? ";
-    cin >> menuSelect;
+    getline(cin, menuSelect);
     ofstream EmpSkills (employee);
     ifstream TempFile ("temp.txt");
     ifstream SecondTempFile ("temp2.txt");
@@ -180,6 +219,7 @@ int skill;
     }
     EmpSkills.close();
     TempFile.close();
+    SecondTempFile.close();
     remove("temp.txt");
     remove("temp2.txt");
     }
