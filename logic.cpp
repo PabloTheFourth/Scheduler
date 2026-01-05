@@ -119,7 +119,28 @@ return 0;
 
 void printSchedule(string schedule[], int arraySize)
 {
-    
+    string weekDays[] = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+    string indexInfo;
+    for (int i = 0; i < 7; i++)
+    {
+        string currentDay = weekDays[i] + ": ";
+        for (int y = 0; i < arraySize; y++)
+        {
+            while (schedule[y] != "")
+            {
+                string wordSearch;
+                ifstream EmpFile (schedule[y] + ".txt");
+                while (getline(EmpFile, wordSearch))
+                {
+                    if (wordSearch.find(currentDay))
+                    {
+                        string option1 = "All Day", option2 = "Night", option3 = "Morning", option4 = "None";
+                        if (currentDay == )
+                    }
+                }
+            }
+        }
+    }
 }
 
 
@@ -266,7 +287,7 @@ double skillNum;
         name = schedule[i] + fileType;
         ifstream MyFile (name);
         ofstream TempFile ("temp.txt");
-        for (int i = 0; i <= 10; i++)
+        for (int i = 0; i < 10; i++)
         {
             getline(MyFile, dummyString);
             TempFile << dummyString << endl;
@@ -316,7 +337,7 @@ double skillNum;
         Myfile2.close();
         Myfile3.close();
 
-        remove("temp2.txt");
+        remove("temp2.txt"); 
         remove("temp.txt");
     }    
 }
