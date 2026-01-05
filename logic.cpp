@@ -39,6 +39,7 @@ void gatherSkillSet(string schedule[], int arraySize, int employeeLoopTime, int 
 void editAvailability(string schedule[], int arraySize);
 void viewAvailability(string schedule[], int arraySize);
 void viewSkillSet(string schedule[], int arraySize);
+void printSchedule(string schedule[], int arraySize);
 
 int main() {
 bool menuLoop = true;
@@ -54,7 +55,8 @@ while (menuLoop == true) {
     cout << "3. edit an employees skills\n";
     cout << "4. View an employees availability\n";
     cout << "5. View an employees skills\n";
-    cout << "6. Turn Off\n";
+    cout << "6. Print out Schedule\n";
+    cout << "7. Turn Off\n";
     cout << "Choice: ";
     cin >> menuChoice;
 
@@ -81,7 +83,6 @@ while (menuLoop == true) {
 
     if (menuChoice == "3") {
         editSkillSet(schedule, numOfEmployees);
-
     }
 
     if (menuChoice == "5") {
@@ -93,6 +94,11 @@ while (menuLoop == true) {
     }
 
     if (menuChoice == "6") {
+        printSchedule(schedule, numOfEmployees);
+
+    }
+
+    if (menuChoice == "7") {
         string name, fileType = ".txt";
 
         menuLoop = false;
@@ -110,6 +116,12 @@ while (menuLoop == true) {
 
 return 0;
 }
+
+void printSchedule(string schedule[], int arraySize)
+{
+    
+}
+
 
 void viewSkillSet(string schedule[], int arraySize)
 {
