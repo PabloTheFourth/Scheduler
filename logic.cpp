@@ -39,7 +39,7 @@ void gatherSkillSet(string schedule[], int arraySize, int employeeLoopTime, int 
 void editAvailability(string schedule[], int arraySize);
 void viewAvailability(string schedule[], int arraySize);
 void viewSkillSet(string schedule[], int arraySize);
-void printSchedule(string schedule[], int arraySize);
+void printSchedule(string schedule[], int arraySize, int dummyEmployeeLoopTime);
 
 int main() {
 bool menuLoop = true;
@@ -94,7 +94,7 @@ while (menuLoop == true) {
     }
 
     if (menuChoice == "6") {
-        printSchedule(schedule, numOfEmployees);
+        printSchedule(schedule, numOfEmployees, dummyEmployeeLoopTime);
 
     }
 
@@ -117,28 +117,30 @@ while (menuLoop == true) {
 return 0;
 }
 
-void printSchedule(string schedule[], int arraySize)
+void printSchedule(string schedule[], int arraySize, int dummyEmployeeLoopTime)
 {
     string weekDays[] = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-    string indexInfo;
+    string availTimes[] = {"Morning", "All Day", "None", "Night"};
     for (int i = 0; i < 7; i++)
     {
-        string currentDay = weekDays[i] + ": ";
-        for (int y = 0; i < arraySize; y++)
+        string wordSearch = weekDays[i] + ":", fileText;
+        for (int j = 0; i < dummyEmployeeLoopTime; j++)
         {
-            while (schedule[y] != "")
+            ifstream MyFile (schedule[j] + ".txt");
+            while (getline(MyFile, fileText))
             {
-                string wordSearch;
-                ifstream EmpFile (schedule[y] + ".txt");
-                while (getline(EmpFile, wordSearch))
+                if (fileText.find(wordSearch) != string::npos)
                 {
-                    if (wordSearch.find(currentDay))
+                    for (int k = 0; k < 4; k++)
                     {
-                        string option1 = "All Day", option2 = "Night", option3 = "Morning", option4 = "None";
-                        if (currentDay == )
+                        if (fileText.find(availTimes[k]) != string::npos)
+                        {
+                            cout << schedule[j] << availTimes[k] << endl;
+                        }
                     }
                 }
             }
+            MyFile.close();
         }
     }
 }
