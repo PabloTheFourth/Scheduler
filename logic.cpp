@@ -121,10 +121,15 @@ void printSchedule(string schedule[], int arraySize, int dummyEmployeeLoopTime)
 {
     string weekDays[] = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
     string availTimes[] = {"Morning", "All Day", "None", "Night"};
+    string wordSearch, fileText;
+    ofstream ScheduleFile ("schedule.txt"); /*create the schuedle format while adding the employees 
+    in their correct time slots*/
+    cout << dummyEmployeeLoopTime;
     for (int i = 0; i < 7; i++)
     {
-        string wordSearch = weekDays[i] + ":", fileText;
-        for (int j = 0; i < dummyEmployeeLoopTime; j++)
+        ScheduleFile << weekDays[i] + ":" << endl << "8:00AM - 2:00PM\n";
+        wordSearch = weekDays[i] + ":";
+        for (int j = 0; j < dummyEmployeeLoopTime; j++)
         {
             ifstream MyFile (schedule[j] + ".txt");
             while (getline(MyFile, fileText))
@@ -135,7 +140,10 @@ void printSchedule(string schedule[], int arraySize, int dummyEmployeeLoopTime)
                     {
                         if (fileText.find(availTimes[k]) != string::npos)
                         {
-                            cout << schedule[j] << availTimes[k] << endl;
+                            if (i == 0)
+                            {
+                                
+                            }
                         }
                     }
                 }
@@ -143,6 +151,7 @@ void printSchedule(string schedule[], int arraySize, int dummyEmployeeLoopTime)
             MyFile.close();
         }
     }
+    cout << "test5" << endl;
 }
 
 
