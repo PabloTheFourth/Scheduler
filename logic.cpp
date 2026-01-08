@@ -125,6 +125,7 @@ void printSchedule(string schedule[], int arraySize, int dummyEmployeeLoopTime)
     ofstream ScheduleFile ("schedule.txt"); /*create the schuedle format while adding the employees 
     in their correct time slots*/
     cout << dummyEmployeeLoopTime;
+
     for (int i = 0; i < 7; i++)
     {
         ScheduleFile << weekDays[i] + ":" << endl;;
@@ -132,7 +133,15 @@ void printSchedule(string schedule[], int arraySize, int dummyEmployeeLoopTime)
         for (int j = 0; j < dummyEmployeeLoopTime; j++)
         {
             ifstream MyFile (schedule[j] + ".txt");
-            while (getline(MyFile, fileText))
+            //copy the schedule profile into a temp file
+            ofstream FirstFile ("Temp" + schedule[j] + ".txt");
+            while(getline(MyFile, fileText))
+            {
+                FirstFile << fileText << endl;
+            }
+            MyFile.close();
+            ifstream SecondFile (schedule[j] + ".txt");
+            while (getline(SecondFile, fileText))
             {
                 if (fileText.find(wordSearch) != string::npos)
                 {
@@ -152,7 +161,7 @@ void printSchedule(string schedule[], int arraySize, int dummyEmployeeLoopTime)
                                     ScheduleFile << workStations[l] << endl;
                                     wordSearch = workStations[l] + ": ";
                                     // you have to open up the same file under a different name to restart the getline function from the beggining
-                                    MyFile.close();
+                                    ifstream TempFile ("Temp" + schedule[j] + ".txt");
                                     //ifstream TempFile (schedule[j] + ".txt");
                                     while (getline(TempFile, fileText))
                                     {
