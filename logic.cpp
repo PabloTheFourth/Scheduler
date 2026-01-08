@@ -141,22 +141,35 @@ void printSchedule(string schedule[], int arraySize, int dummyEmployeeLoopTime)
                         if (fileText.find(availTimes[k]) != string::npos)
                         {
                             if (i == 0)
-                            {
+                            {   
                                 string workStations[] = {"Salad Side", "Grill Side", "Stretcher", "Pizza Line", "Oven", "Prep", "Dishwasher"};
+                                string skillRating[] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+                                int empSkills[50];
                                 ScheduleFile << "8:00AM - 2:00PM" << endl;
-                                for (int l = 0; i < 7; l++)
+                                ifstream TempFile (schedule[j] + ".txt");
+                                for (int l = 0; l < 7; l++)
                                 {
                                     ScheduleFile << workStations[l] << endl;
                                     wordSearch = workStations[l] + ": ";
-                                    while (getline(MyFile, fileText))
+                                    // you have to open up the same file under a different name to restart the getline function from the beggining
+                                    MyFile.close();
+                                    //ifstream TempFile (schedule[j] + ".txt");
+                                    while (getline(TempFile, fileText))
                                     {
                                         if (fileText.find(wordSearch) != string::npos)
                                         {
-                                            
+                                            for (int m = 0; m < 11; m++)
+                                            {
+                                                if (fileText.find(skillRating[m]) != string::npos)
+                                                {
+                                                    empSkills[j] = m;
+                                                    ScheduleFile << schedule[j] << " - " << empSkills[j] << endl;
+                                                }
+                                            }
                                         }
                                     }
                                 }
-
+                                TempFile.close();
                             }
                         }
                     }
