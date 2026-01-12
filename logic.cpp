@@ -39,7 +39,7 @@ void gatherSkillSet(string schedule[], int arraySize, int employeeLoopTime, int 
 void editAvailability(string schedule[], int arraySize);
 void viewAvailability(string schedule[], int arraySize);
 void viewSkillSet(string schedule[], int arraySize);
-void printSchedule(string schedule[], int arraySize);
+void printSchedule(string schedule[], int arraySize, int employeeLoopTime);
 
 int main() {
 bool menuLoop = true;
@@ -94,7 +94,7 @@ while (menuLoop == true) {
     }
 
     if (menuChoice == "6") {
-        printSchedule(schedule, numOfEmployees);
+        printSchedule(schedule, numOfEmployees, dummyEmployeeLoopTime);
 
     }
 
@@ -117,9 +117,48 @@ while (menuLoop == true) {
 return 0;
 }
 
-void printSchedule(string schedule[], int arraySize)
+void printSchedule(string schedule[], int arraySize, int employeeLoopTime)
 {
+    string workLabel[arraySize], fileText;
+    int saladSide[arraySize], grillSide[arraySize], Strecher[arraySize], pizzaLine[arraySize], oven[arraySize], prep[arraySize], dishwasher[arraySize];
     
+
+    for (int i = 0; i < employeeLoopTime; i++)
+    {
+        ifstream DummyFile (schedule[i] + ".txt");
+        ofstream DummyEmpFile ("temp.txt");
+        ofstream DummyEmpFile2 ("temp2.txt");
+        while (getline(DummyFile, fileText))
+        {
+            DummyEmpFile << fileText << endl;
+            DummyEmpFile2 << fileText << endl;
+        }
+        DummyFile.close();
+        DummyEmpFile.close();
+        DummyEmpFile2.close();
+        ifstream TextFile {schedule[i] + ".txt"}; //Get The Kitchen Role of every Employee
+        ifstream EmpFile ("temp.txt"); //Get their skill set for each skill role
+        ifstream EmpFile2 ("temp2.txt");
+
+        while (getline(TextFile, fileText))
+        {
+            if (fileText.find("Kitchen Manager") != string::npos)
+            {
+                workLabel[i] = "Kitchen Manager";
+            }
+
+            if (fileText.find("Coworker") != string::npos)
+            {
+                workLabel[i] = "Coworker";
+            }
+
+            if (fileText.find("Salad Side") != string::npos)
+            {
+                //make another for loop to a new array from 1 - 10 to detect what number their skill is
+            }
+        }
+
+    }
 }
 
 
