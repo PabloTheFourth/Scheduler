@@ -23,6 +23,9 @@ Fix the view for either Availability or Skill set - FIXED
 
 1/4/2026
 The schedule Array contains every bit of information about the employee, from their kitchen title to their skill set.
+
+1/13/26
+On the user made function called printschedule - in the future, you make an array of pointers to reduce the checking time and for loops that you have to make.
 */
 
 
@@ -120,11 +123,15 @@ return 0;
 void printSchedule(string schedule[], int arraySize, int employeeLoopTime)
 {
     string workLabel[arraySize], fileText;
-    int saladSide[arraySize], grillSide[arraySize], Strecher[arraySize], pizzaLine[arraySize], oven[arraySize], prep[arraySize], dishwasher[arraySize];
-    
+    int* skillSets[7];
+    string* weekDay[8];
 
+    ofstream ScheduleFile ("Schedule.txt");
+    ScheduleFile << "Work Schedule" << endl << endl;
+// 137 - 175 grabs the skill set and kitchen role of the employee
     for (int i = 0; i < employeeLoopTime; i++)
     {
+
         ifstream DummyFile (schedule[i] + ".txt");
         ofstream DummyEmpFile ("temp.txt");
         ofstream DummyEmpFile2 ("temp2.txt");
@@ -136,12 +143,14 @@ void printSchedule(string schedule[], int arraySize, int employeeLoopTime)
         DummyFile.close();
         DummyEmpFile.close();
         DummyEmpFile2.close();
-        ifstream TextFile {schedule[i] + ".txt"}; //Get The Kitchen Role of every Employee
-        ifstream EmpFile ("temp.txt"); //Get their skill set for each skill role
+        ifstream TextFile {schedule[i] + ".txt"}; //Get The Kitchen Role of every Employee and thier skill set
+        ifstream EmpFile ("temp.txt"); //determine what hours they will work
         ifstream EmpFile2 ("temp2.txt");
-
+        int skillSetCounter = 0, dayOfWeekCounter = 0;
         while (getline(TextFile, fileText))
         {
+            weekDay[dayOfWeekCounter] = (string*)malloc(arraySize * sizeof(string));
+
             if (fileText.find("Kitchen Manager") != string::npos)
             {
                 workLabel[i] = "Kitchen Manager";
@@ -152,12 +161,46 @@ void printSchedule(string schedule[], int arraySize, int employeeLoopTime)
                 workLabel[i] = "Coworker";
             }
 
-            if (fileText.find("Salad Side") != string::npos)
+            if (fileText.find("Morning") != string::npos)
+            {
+                weekDay[i][dayOfWeekCounter]  = "Morning"; //Segmentation Fault
+                dayOfWeekCounter += 1;
+            }
+
+            if (fileText.find("All Day") != string::npos)
+            {
+                weekDay[i][dayOfWeekCounter] = "All Day";
+                dayOfWeekCounter += 1;
+            }
+
+            if (fileText.find("None") != string::npos)
+            {
+                weekDay[i][dayOfWeekCounter] = "None";
+                dayOfWeekCounter += 1;
+            }
+
+            if (fileText.find("Night") != string::npos)
+            {
+                weekDay[i][dayOfWeekCounter] = "Night";
+                dayOfWeekCounter += 1;
+            }
+
+            if (fileText.find("1" || "2" || "3" || "4" || "5" || "6" || "7" || "8" || "9" || "10") != string::npos)
             {
                 //make another for loop to a new array from 1 - 10 to detect what number their skill is
+                skillSets[i] = (int*)malloc(arraySize * sizeof(int));
+                skillSets[i][skillSetCounter];
+                skillSetCounter += 1;
             }
         }
+        TextFile.close();
+        
+        
+        for (int j = 0; j < employeeLoopTime; j++)
+        {
+            cout << endl << schedule[j] << endl << weekDay [j][j] << endl << skillSets[j][j];
 
+        }
     }
 }
 
