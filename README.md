@@ -25,3 +25,4 @@ Input Validation
 - fileText.find(" ");
 - string::npos
 - while(getline(fileText, text))
+- pointers and an array of pointer 
