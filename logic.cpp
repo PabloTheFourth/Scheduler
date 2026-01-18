@@ -23,6 +23,9 @@ Fix the view for either Availability or Skill set - FIXED
 
 1/4/2026
 The schedule Array contains every bit of information about the employee, from their kitchen title to their skill set.
+
+1/13/26
+On the user made function called printschedule - in the future, you make an array of pointers to reduce the checking time and for loops that you have to make.
 */
 
 
@@ -39,7 +42,7 @@ void gatherSkillSet(string schedule[], int arraySize, int employeeLoopTime, int 
 void editAvailability(string schedule[], int arraySize);
 void viewAvailability(string schedule[], int arraySize);
 void viewSkillSet(string schedule[], int arraySize);
-void printSchedule(string schedule[], int arraySize, int dummyEmployeeLoopTime);
+void printSchedule(string schedule[], int arraySize, int employeeLoopTime);
 
 int main() {
 bool menuLoop = true;
@@ -117,80 +120,87 @@ while (menuLoop == true) {
 return 0;
 }
 
-void printSchedule(string schedule[], int arraySize, int dummyEmployeeLoopTime)
+void printSchedule(string schedule[], int arraySize, int employeeLoopTime)
 {
-    string weekDays[] = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-    string availTimes[] = {"Morning", "Night", "None", "All Day"};
-    string wordSearch, fileText;
-    int empSkills[50];
+    string workLabel[arraySize], fileText;
+    int* skillSets[7];
+    string** weekDay = new string*[8]; //created actaul 3d array
 
-    ofstream ScheduleFile ("schedule.txt"); /*create the schuedle format while adding the employees 
-    in their correct time slots*/
-    cout << dummyEmployeeLoopTime;
-
-    for (int i = 0; i < 7; i++)
+    ofstream ScheduleFile ("Schedule.txt");
+    ScheduleFile << "Work Schedule" << endl << endl;
+// 137 - 175 grabs the skill set and kitchen role of the employee
+    for (int i = 0; i < employeeLoopTime; i++)
     {
-        ScheduleFile << weekDays[i] + ":" << endl;;
-        wordSearch = weekDays[i] + ":";
-        for (int j = 0; j < dummyEmployeeLoopTime; j++)
+
+        ifstream DummyFile (schedule[i] + ".txt");
+        ofstream DummyEmpFile ("temp.txt");
+        ofstream DummyEmpFile2 ("temp2.txt");
+        while (getline(DummyFile, fileText))
         {
-            for (int jj = 0; jj < dummyEmployeeLoopTime; jj++)
+            DummyEmpFile << fileText << endl;
+            DummyEmpFile2 << fileText << endl;
+        }
+        DummyFile.close();
+        DummyEmpFile.close();
+        DummyEmpFile2.close();
+        ifstream TextFile {schedule[i] + ".txt"}; //Get The Kitchen Role of every Employee and thier skill set
+        ifstream EmpFile ("temp.txt"); //determine what hours they will work
+        ifstream EmpFile2 ("temp2.txt");
+        int skillSetCounter = 0, dayOfWeekCounter = 0;
+        while (getline(TextFile, fileText))
+        {
+            weekDay[dayOfWeekCounter] = new string[1];
+            if (fileText.find("Kitchen Manager") != string::npos)
             {
-                ifstream MyFile (schedule[j] + ".txt");
-                //copy the schedule profile into a temp file
-                ofstream FirstFile ("Temp" + schedule[j] + ".txt");
-                while(getline(MyFile, fileText))
-                {
-                    FirstFile << fileText << endl;
-                }
-                MyFile.close();
+                workLabel[i] = "Kitchen Manager";
             }
-            ifstream SecondFile (schedule[j] + ".txt");
-            while (getline(SecondFile, fileText))
+
+            if (fileText.find("Coworker") != string::npos)
             {
-                if (fileText.find(wordSearch) != string::npos)
-                {
-                    for (int k = 0; k < 4; k++)
-                    {
-                        if (fileText.find(availTimes[k]) != string::npos)
-                        {
-                            if (i == 0)
-                            {   
-                                string workStations[] = {"Salad Side", "Grill Side", "Stretcher", "Pizza Line", "Oven", "Prep", "Dishwasher"};
-                                string skillRating[] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-                                ScheduleFile << "8:00AM - 2:00PM" << endl;
-                                ifstream TempFile (schedule[j] + ".txt");
-                                for (int l = 0; l < 7; l++)
-                                {
-                                    ScheduleFile << workStations[l] << endl;
-                                    wordSearch = workStations[l] + ": ";
-                                    // you have to open up the same file under a different name to restart the getline function from the beggining
-                                    ifstream SecondTempFile ("Temp" + schedule[j] + ".txt");
-                                    //ifstream TempFile (schedule[j] + ".txt");
-                                    while (getline(SecondTempFile, fileText))
-                                    {
-                                        if (fileText.find(wordSearch) != string::npos)
-                                        {
-                                            for (int m = 0; m < 11; m++)
-                                            {
-                                                if (fileText.find(skillRating[m]) != string::npos)
-                                                {
-                                                    empSkills[j] = m;
-                                                    ScheduleFile << schedule[j] << " - " << empSkills[j] << endl;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                TempFile.close();
-                            }
-                        }
-                    }
-                }
+                workLabel[i] = "Coworker";
+            }
+
+            if (fileText.find("Morning") != string::npos)
+            {
+                weekDay[i][dayOfWeekCounter]  = "Morning"; //Segmentation Fault
+                dayOfWeekCounter += 1;
+            }
+
+            if (fileText.find("All Day") != string::npos)
+            {
+                weekDay[i][dayOfWeekCounter] = "All Day";
+                dayOfWeekCounter += 1;
+            }
+
+            if (fileText.find("None") != string::npos)
+            {
+                weekDay[i][dayOfWeekCounter] = "None";
+                dayOfWeekCounter += 1;
+            }
+
+            if (fileText.find("Night") != string::npos)
+            {
+                weekDay[i][dayOfWeekCounter] = "Night";
+                dayOfWeekCounter += 1;
+            }
+
+            if (fileText.find("1" || "2" || "3" || "4" || "5" || "6" || "7" || "8" || "9" || "10") != string::npos)
+            {
+                //make another for loop to a new array from 1 - 10 to detect what number their skill is
+                skillSets[i] = (int*)malloc(arraySize * sizeof(int));
+                skillSets[i][skillSetCounter];
+                skillSetCounter += 1;
             }
         }
+        TextFile.close();
+        
+        
+        for (int j = 0; j < employeeLoopTime; j++)
+        {
+            cout << endl << schedule[j] << endl << weekDay [j][j] << endl << skillSets[j][j];
+
+        }
     }
-    cout << "test5" << endl;
 }
 
 
