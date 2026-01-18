@@ -131,7 +131,6 @@ void printSchedule(string schedule[], int arraySize, int employeeLoopTime)
 // 137 - 175 grabs the skill set and kitchen role of the employee
     for (int i = 0; i < employeeLoopTime; i++)
     {
-        weekDay[i] = new string[1];
 
         ifstream DummyFile (schedule[i] + ".txt");
         ofstream DummyEmpFile ("temp.txt");
@@ -150,8 +149,7 @@ void printSchedule(string schedule[], int arraySize, int employeeLoopTime)
         int skillSetCounter = 0, dayOfWeekCounter = 0;
         while (getline(TextFile, fileText))
         {
-            weekDay[dayOfWeekCounter] = (string*)malloc(1 * sizeof(string));
-
+            weekDay[dayOfWeekCounter] = new string[1];
             if (fileText.find("Kitchen Manager") != string::npos)
             {
                 workLabel[i] = "Kitchen Manager";
