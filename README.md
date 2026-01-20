@@ -26,3 +26,4 @@ Input Validation
 - string::npos
 - while(getline(fileText, text))
 - pointers and an array of pointer 
+- Could have used structs to get the information of the employee (role, skillset, availability, etc.)
