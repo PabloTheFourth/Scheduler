@@ -20,7 +20,7 @@ void printSchedule(string schedule[], int arraySize, int employeeLoopTime)
 Input Validation 
 - specifically in the different function that gain information
 
-#Information gained from project
+# Information gained from project
 - Segmentation failure
 - fileText.find(" ");
 - string::npos
