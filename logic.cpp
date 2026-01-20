@@ -123,7 +123,7 @@ return 0;
 void printSchedule(string schedule[], int arraySize, int employeeLoopTime)
 {
     string workLabel[arraySize], fileText;
-    int* skillSets[7];
+    string** skillSets = new string*[7];
     string** weekDay = new string*[8]; //created actaul 3d array
 
     ofstream ScheduleFile ("Schedule.txt");
@@ -162,42 +162,59 @@ void printSchedule(string schedule[], int arraySize, int employeeLoopTime)
 
             if (fileText.find("Morning") != string::npos)
             {
-                weekDay[i][dayOfWeekCounter]  = "Morning"; //Segmentation Fault
+                if (skillSetCounter < 8)
+                {
+                weekDay[dayOfWeekCounter][0]  = "Morning"; //Segmentation Fault
                 dayOfWeekCounter += 1;
+                }
             }
 
             if (fileText.find("All Day") != string::npos)
             {
-                weekDay[i][dayOfWeekCounter] = "All Day";
+                if (skillSetCounter < 8)
+                {
+                weekDay[dayOfWeekCounter][0] = "All Day";
                 dayOfWeekCounter += 1;
+                }
             }
 
             if (fileText.find("None") != string::npos)
             {
-                weekDay[i][dayOfWeekCounter] = "None";
+                if (skillSetCounter < 8)
+                {
+                weekDay[dayOfWeekCounter][0] = "None";
                 dayOfWeekCounter += 1;
+                }
             }
 
             if (fileText.find("Night") != string::npos)
             {
-                weekDay[i][dayOfWeekCounter] = "Night";
+                if (skillSetCounter < 8)
+                {
+                weekDay[dayOfWeekCounter][0] = "Night";
                 dayOfWeekCounter += 1;
+                }
             }
 
-            if (fileText.find("1" || "2" || "3" || "4" || "5" || "6" || "7" || "8" || "9" || "10") != string::npos)
+            if (fileText.find("Salad Side") != string::npos || fileText.find("Grill Side") != string::npos)
             {
-                //make another for loop to a new array from 1 - 10 to detect what number their skill is
-                skillSets[i] = (int*)malloc(arraySize * sizeof(int));
-                skillSets[i][skillSetCounter];
+                skillSets[skillSetCounter] = new string [1];
+                skillSets[skillSetCounter][0] = fileText;
+                cout << skillSets[skillSetCounter][0];
                 skillSetCounter += 1;
             }
+            cout << endl << fileText << endl;
         }
         TextFile.close();
         
-        
+        cout << employeeLoopTime;
         for (int j = 0; j < employeeLoopTime; j++)
         {
-            cout << endl << schedule[j] << endl << weekDay [j][j] << endl << skillSets[j][j];
+            cout << endl << schedule[j] << endl << weekDay [j][0] << endl;
+            
+            for (int k = 0; )
+            
+            skillSets[j][0];
 
         }
     }
