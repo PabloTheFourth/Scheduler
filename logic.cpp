@@ -25,7 +25,7 @@ Fix the view for either Availability or Skill set - FIXED
 The schedule Array contains every bit of information about the employee, from their kitchen title to their skill set.
 
 1/13/26
-On the user made function called printschedule - in the future, you make an array of pointers to reduce the checking time and for loops that you have to make.
+On the user made function called printschedule - in the future, you make an array of pointers to reduce the check time and for loops that you have to make.
 */
 
 
@@ -212,7 +212,7 @@ void printSchedule(string schedule[], int arraySize, int employeeLoopTime)
         {
             cout << endl << schedule[j] << endl << weekDay [j][0] << endl;
             
-            for (int k = 0; )
+            for (int k = 0 )
             
             skillSets[j][0];
 
